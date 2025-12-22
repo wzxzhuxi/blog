@@ -80,13 +80,18 @@ const Router = (function() {
     const parsed = parseHash(window.location.hash);
     currentRoute = parsed;
 
+    // Debug logging for route resolution
+    console.log('[Router] Navigating to:', window.location.hash, '-> Parsed:', parsed.path, 'Params:', JSON.stringify(parsed.params));
+
     // Try exact match first
     if (routes.has(parsed.path)) {
+      console.log('[Router] Route matched:', parsed.path);
       routes.get(parsed.path)(parsed.params);
       return;
     }
 
     // 404 fallback
+    console.log('[Router] No route matched, showing 404');
     if (routes.has('/404')) {
       routes.get('/404')(parsed);
     } else {

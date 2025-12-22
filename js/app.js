@@ -10,6 +10,39 @@ const App = (function() {
     return document.getElementById('app-content');
   };
 
+  // Render ID to prevent race conditions during async operations
+  let currentRenderId = 0;
+
+  // Page type constants for explicit identification
+  const PAGE_TYPES = {
+    ARTICLE_LIST: 'article-list',
+    ARTICLE_DETAIL: 'article-detail',
+    PROJECT_LIST: 'project-list',
+    COLLECTION_LIST: 'collection-list',
+    COLLECTION_DETAIL: 'collection-detail',
+    CHAPTER_DETAIL: 'chapter-detail',
+    DIARY_LIST: 'diary-list',
+    DIARY_DETAIL: 'diary-detail',
+    ABOUT: 'about',
+    NOT_FOUND: 'not-found'
+  };
+
+  /**
+   * Clear the main content area completely before rendering a new page.
+   * This prevents any DOM pollution from previous pages.
+   * @param {string} pageType - The type of page being rendered
+   */
+  function clearAndPrepare(pageType) {
+    const container = mainContent();
+    // Force complete DOM replacement - remove all children
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+    // Set data attribute to identify current page type
+    container.setAttribute('data-page-type', pageType);
+    return container;
+  }
+
   // ============================================
   // Component Builders (Pure Functions)
   // ============================================
@@ -91,6 +124,7 @@ const App = (function() {
 
   function renderArticleList() {
     Router.updateActiveNav('/');
+    clearAndPrepare(PAGE_TYPES.ARTICLE_LIST);
 
     const html = createPageTitle('Articles') +
       '<div class="article-list fade-in">' +
@@ -102,6 +136,10 @@ const App = (function() {
 
   function renderArticleDetail(params) {
     Router.updateActiveNav('/');
+    clearAndPrepare(PAGE_TYPES.ARTICLE_DETAIL);
+
+    // Increment render ID to invalidate any pending async operations
+    const renderId = ++currentRenderId;
 
     const article = Config.articles.find(function(a) {
       return a.slug === params.slug;
@@ -131,10 +169,13 @@ const App = (function() {
 
     mainContent().innerHTML = html;
 
-    // Load external markdown
+    // Load external markdown (with render ID check and page type validation)
     if (article.url && window.Markdown) {
       const bodyEl = document.getElementById('article-body');
-      Markdown.renderExternalMarkdown(article.url, bodyEl);
+      // Only proceed if this render is still current
+      if (renderId === currentRenderId) {
+        Markdown.renderExternalMarkdown(article.url, bodyEl, PAGE_TYPES.ARTICLE_DETAIL);
+      }
     }
   }
 
@@ -174,6 +215,7 @@ const App = (function() {
 
   function renderProjects() {
     Router.updateActiveNav('/projects');
+    clearAndPrepare(PAGE_TYPES.PROJECT_LIST);
 
     // Sort by stars descending (use 0 if no static stars)
     const sortedProjects = Config.projects.slice().sort(function(a, b) {
@@ -222,6 +264,7 @@ const App = (function() {
 
   function renderDiaryList() {
     Router.updateActiveNav('/diary');
+    clearAndPrepare(PAGE_TYPES.DIARY_LIST);
 
     const html = createPageTitle('Diary') +
       '<div class="diary-list fade-in">' +
@@ -233,6 +276,7 @@ const App = (function() {
 
   function renderDiaryDetail(params) {
     Router.updateActiveNav('/diary');
+    clearAndPrepare(PAGE_TYPES.DIARY_DETAIL);
 
     const diary = Config.diaries.find(function(d) {
       return d.id === params.id;
@@ -306,6 +350,7 @@ const App = (function() {
 
   function renderCollectionsList() {
     Router.updateActiveNav('/collections');
+    clearAndPrepare(PAGE_TYPES.COLLECTION_LIST);
 
     const html = createPageTitle('Collections') +
       '<p class="page-desc text-tertiary">Structured tutorials and book-length content. Each collection contains multiple chapters.</p>' +
@@ -318,6 +363,7 @@ const App = (function() {
 
   function renderCollectionDetail(params) {
     Router.updateActiveNav('/collections');
+    clearAndPrepare(PAGE_TYPES.COLLECTION_DETAIL);
 
     const collection = Config.collections.find(function(c) {
       return c.slug === params.slug;
@@ -367,6 +413,10 @@ const App = (function() {
 
   function renderChapterDetail(params) {
     Router.updateActiveNav('/collections');
+    clearAndPrepare(PAGE_TYPES.CHAPTER_DETAIL);
+
+    // Increment render ID to invalidate any pending async operations
+    const renderId = ++currentRenderId;
 
     const collection = Config.collections.find(function(c) {
       return c.slug === params.slug;
@@ -416,7 +466,6 @@ const App = (function() {
             'from <a href="#/collection/' + escapeHtml(collection.slug) + '">' + escapeHtml(collection.title) + '</a>' +
           '</div>' +
         '</header>' +
-        navHtml +
         '<div id="chapter-body" class="chapter-content__body">' +
           '<div class="loading-state">' +
             '<div class="loading-state__spinner"></div>' +
@@ -428,10 +477,13 @@ const App = (function() {
 
     mainContent().innerHTML = html;
 
-    // Load external markdown
+    // Load external markdown (with render ID check and page type validation)
     if (chapter.url && window.Markdown) {
       const bodyEl = document.getElementById('chapter-body');
-      Markdown.renderExternalMarkdown(chapter.url, bodyEl);
+      // Only proceed if this render is still current
+      if (renderId === currentRenderId) {
+        Markdown.renderExternalMarkdown(chapter.url, bodyEl, PAGE_TYPES.CHAPTER_DETAIL);
+      }
     }
   }
 
@@ -441,6 +493,7 @@ const App = (function() {
 
   function renderAbout() {
     Router.updateActiveNav('/about');
+    clearAndPrepare(PAGE_TYPES.ABOUT);
 
     // Build social links
     var socialLinks = Config.social.map(function(link) {
@@ -483,7 +536,7 @@ const App = (function() {
 
     if (window.Markdown) {
       var bodyEl = document.getElementById('about-body');
-      Markdown.renderExternalMarkdown(profileReadmeUrl, bodyEl);
+      Markdown.renderExternalMarkdown(profileReadmeUrl, bodyEl, PAGE_TYPES.ABOUT);
     }
   }
 
@@ -492,6 +545,8 @@ const App = (function() {
   // ============================================
 
   function renderNotFound() {
+    clearAndPrepare(PAGE_TYPES.NOT_FOUND);
+
     const html = '<div class="fade-in" style="text-align: center; padding: 48px 0;">' +
       '<div style="font-size: 4rem; color: var(--accent-gold); font-family: var(--font-mono);">404</div>' +
       '<h1 style="margin: 16px 0;">Page Not Found</h1>' +

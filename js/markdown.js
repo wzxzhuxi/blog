@@ -117,11 +117,27 @@ const Markdown = (function() {
     return div;
   }
 
-  async function renderExternalMarkdown(url, container) {
+  async function renderExternalMarkdown(url, container, expectedPageType) {
     try {
       // Validate URL before fetching
       if (!url || url === '#' || !url.startsWith('http')) {
         throw new Error('Invalid content URL');
+      }
+
+      // Validate container still exists and is in the DOM
+      if (!container || !container.parentNode) {
+        console.warn('[!] Container no longer in DOM, aborting markdown render');
+        return false;
+      }
+
+      // If expectedPageType is provided, validate the current page type
+      if (expectedPageType) {
+        var appContent = document.getElementById('app-content');
+        var currentPageType = appContent ? appContent.getAttribute('data-page-type') : null;
+        if (currentPageType !== expectedPageType) {
+          console.warn('[!] Page type changed during fetch, aborting. Expected:', expectedPageType, 'Current:', currentPageType);
+          return false;
+        }
       }
 
       while (container.firstChild) {
@@ -130,6 +146,22 @@ const Markdown = (function() {
       container.appendChild(createLoadingElement());
 
       var markdown = await fetchMarkdown(url);
+
+      // Re-validate container and page type after async fetch
+      if (!container || !container.parentNode) {
+        console.warn('[!] Container no longer in DOM after fetch, aborting');
+        return false;
+      }
+
+      if (expectedPageType) {
+        var appContent = document.getElementById('app-content');
+        var currentPageType = appContent ? appContent.getAttribute('data-page-type') : null;
+        if (currentPageType !== expectedPageType) {
+          console.warn('[!] Page type changed after fetch, aborting. Expected:', expectedPageType, 'Current:', currentPageType);
+          return false;
+        }
+      }
+
       var html = renderMarkdown(markdown);
       var sanitized = sanitizeHTML(html);
 
@@ -151,6 +183,11 @@ const Markdown = (function() {
       applyHighlighting(container);
       return true;
     } catch (error) {
+      // Final check before inserting error - container must still be valid
+      if (!container || !container.parentNode) {
+        console.warn('[!] Container gone, cannot show error');
+        return false;
+      }
       while (container.firstChild) {
         container.removeChild(container.firstChild);
       }

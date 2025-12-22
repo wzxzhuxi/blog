@@ -24,6 +24,28 @@
  */
 
 window.DataArticles = [
+  // ============================================
+  // TEST CASES - Verify bug fix works
+  // ============================================
+  {
+    slug: 'test-invalid-url',
+    title: '[TEST] Invalid URL - Should Show Error',
+    date: '2025-12-22',
+    summary: 'This article has an invalid URL (#). Should display error, not render HTML.',
+    url: '#',
+    tags: ['test', 'bug-fix']
+  },
+  {
+    slug: 'test-html-response',
+    title: '[TEST] HTML Response - Should Show Error',
+    date: '2025-12-22',
+    summary: 'This URL returns HTML page. Should display error, not render the HTML.',
+    url: 'https://github.com/octocat/Spoon-Knife',
+    tags: ['test', 'bug-fix']
+  },
+  // ============================================
+  // Real Articles
+  // ============================================
   {
     slug: 'charliedb',
     title: 'CharlieDB',
