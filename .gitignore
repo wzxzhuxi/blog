@@ -19,6 +19,5 @@ node_modules/
 # Personal config (contains user-specific info)
 # Users should copy blog.config.template.toml to blog.config.toml
 # and customize it with their own information.
-# Uncomment the line below if you want to keep your config private:
-# blog.config.toml
+blog.config.toml
 

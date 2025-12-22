@@ -28,47 +28,14 @@
 
 window.DataCollections = [
   {
-    slug: 'cpp-fp-guide',
-    title: 'C++ Functional Programming Guide',
-    // author is optional - will use config.personal.name
-    description: 'A comprehensive guide to functional programming patterns in modern C++. Covers pure functions, immutability, higher-order functions, and composition.',
-    date: '2025-12-22',
-    tags: ['C++', 'functional', 'tutorial'],
+    slug: 'example-tutorial',
+    title: 'Example Tutorial Series',
+    description: 'Replace this with your own tutorial collection',
+    date: '2025-01-01',
+    tags: ['tutorial', 'example'],
     chapters: [
-      {
-        number: 1,
-        title: 'Introduction to Functional Programming',
-        repo: 'cpp-functional-programming'
-      },
-      {
-        number: 2,
-        title: 'Pure Functions and Immutability',
-        repo: 'cpp-functional-programming'
-      },
-      {
-        number: 3,
-        title: 'Higher-Order Functions',
-        repo: 'cpp-functional-programming'
-      }
-    ]
-  },
-  {
-    slug: 'rust-systems-programming',
-    title: 'Rust Systems Programming',
-    description: 'Building high-performance systems in Rust. Covers thread pools, database internals, and performance optimization techniques.',
-    date: '2025-12-20',
-    tags: ['Rust', 'systems', 'performance'],
-    chapters: [
-      {
-        number: 1,
-        title: 'Thread Pool Implementation',
-        repo: 'Rust-dynamic-thread-pool'
-      },
-      {
-        number: 2,
-        title: 'Time Series Database Design',
-        repo: 'CharlieDB'
-      }
+      { number: 1, title: 'Introduction', repo: 'example-repo' },
+      { number: 2, title: 'Getting Started', repo: 'example-repo', path: 'docs/start.md' }
     ]
   }
 ];
