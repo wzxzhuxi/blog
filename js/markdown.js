@@ -35,6 +35,21 @@ const Markdown = (function() {
     });
   }
 
+  /**
+   * Check if content appears to be HTML rather than Markdown
+   * @param {string} content - Content to check
+   * @returns {boolean} True if content looks like HTML
+   */
+  function isHTMLContent(content) {
+    var trimmed = content.trim().toLowerCase();
+    // Check for HTML document markers
+    return trimmed.startsWith('<!doctype') ||
+           trimmed.startsWith('<html') ||
+           trimmed.startsWith('<?xml') ||
+           // Check for common HTML-only patterns (full page structure)
+           (trimmed.includes('<head>') && trimmed.includes('<body>'));
+  }
+
   async function fetchMarkdown(url) {
     if (cache.has(url)) {
       return cache.get(url);
@@ -46,6 +61,12 @@ const Markdown = (function() {
     }
 
     const content = await response.text();
+
+    // Validate content is markdown, not HTML
+    if (isHTMLContent(content)) {
+      throw new Error('Received HTML instead of Markdown');
+    }
+
     cache.set(url, content);
     return content;
   }
