@@ -30,15 +30,20 @@ git clone https://github.com/wzxzhuxi/zhuxiblog.git
 cd zhuxiblog
 ```
 
-### 2. Configure Your Blog
+### 2. Preview Immediately
 
-Copy the template and edit your configuration:
+Works out of the box! The template comes with a runnable demo configuration:
 
 ```bash
-cp blog.config.template.toml blog.config.toml
+python -m http.server 8000
+# Visit http://localhost:8000
 ```
 
-Edit `blog.config.toml`:
+You'll see a demo blog using GitHub's official octocat account.
+
+### 3. Configure Your Blog
+
+Edit `blog.config.toml` (already exists, no need to copy):
 
 ```toml
 [personal]
@@ -67,7 +72,7 @@ type = "email"
 icon = "[+]"
 ```
 
-### 3. Add Articles
+### 4. Add Articles
 
 Edit `js/data/articles.js`:
 
@@ -90,7 +95,7 @@ Article sources can be:
 - **Direct URL**: `{ url: 'https://raw.githubusercontent.com/...' }`
 - **External repo**: `{ external: { username: 'other', repo: 'repo', path: 'file.md' } }`
 
-### 4. Add Projects
+### 5. Add Projects
 
 Edit `js/data/projects.js`:
 
@@ -108,7 +113,7 @@ window.DataProjects = [
 
 Star counts are fetched automatically from the GitHub API.
 
-### 5. Deploy to GitHub Pages
+### 6. Deploy to GitHub Pages
 
 1. Push to GitHub
 2. Go to Settings > Pages

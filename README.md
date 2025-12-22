@@ -30,15 +30,20 @@ git clone https://github.com/wzxzhuxi/zhuxiblog.git
 cd zhuxiblog
 ```
 
-### 2. 配置你的博客
+### 2. 立即预览
 
-复制模板并编辑配置：
+开箱即用! 模板自带可运行的演示配置：
 
 ```bash
-cp blog.config.template.toml blog.config.toml
+python -m http.server 8000
+# 访问 http://localhost:8000
 ```
 
-编辑 `blog.config.toml`：
+你会看到一个使用 GitHub 官方 octocat 账户的演示博客。
+
+### 3. 配置你的博客
+
+编辑 `blog.config.toml`（已存在，无需复制）：
 
 ```toml
 [personal]
@@ -67,7 +72,7 @@ type = "email"
 icon = "[+]"
 ```
 
-### 3. 添加文章
+### 4. 添加文章
 
 编辑 `js/data/articles.js`：
 
@@ -90,7 +95,7 @@ window.DataArticles = [
 - **直接 URL**: `{ url: 'https://raw.githubusercontent.com/...' }`
 - **外部仓库**: `{ external: { username: 'other', repo: 'repo', path: 'file.md' } }`
 
-### 4. 添加项目
+### 5. 添加项目
 
 编辑 `js/data/projects.js`：
 
@@ -108,7 +113,7 @@ window.DataProjects = [
 
 星标数会自动从 GitHub API 获取。
 
-### 5. 部署到 GitHub Pages
+### 6. 部署到 GitHub Pages
 
 1. 推送到 GitHub
 2. 进入 Settings > Pages

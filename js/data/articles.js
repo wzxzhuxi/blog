@@ -47,59 +47,21 @@ window.DataArticles = [
   // Real Articles
   // ============================================
   {
-    slug: 'charliedb',
-    title: 'CharlieDB',
-    date: '2025-12-21',
-    summary: 'A simple time series database built from scratch in Rust, featuring components from DDIA.',
-    repo: 'CharlieDB',
-    tags: ['Rust', 'database', 'timeseries']
+    slug: 'getting-started',
+    title: 'Getting Started with This Blog',
+    date: '2025-01-01',
+    summary: 'A quick guide to setting up your own blog using this template.',
+    // Using octocat's Spoon-Knife repo - a famous GitHub demo repo
+    url: 'https://raw.githubusercontent.com/octocat/Spoon-Knife/main/README.md',
+    tags: ['tutorial', 'getting-started']
   },
   {
-    slug: 'pool-factory',
-    title: 'Pool Factory',
-    date: '2025-12-19',
-    summary: 'Functional programming factory pattern using pure functions for generic pooling.',
-    repo: 'pool-factory',
-    tags: ['C++', 'functional', 'design-pattern']
-  },
-  {
-    slug: 'rknn-3588-npu-yolo-accelerate',
-    title: 'RKNN-3588 NPU YOLO Accelerate',
-    date: '2025-12-18',
-    summary: 'YOLOv5 deployment on RKNN-3588 with thread pool for NPU inference acceleration.',
-    repo: 'rknn-3588-npu-yolo-accelerate',
-    tags: ['C++', 'NPU', 'YOLO', 'embedded']
-  },
-  {
-    slug: 'lambda-waybar',
-    title: 'Lambda Waybar',
-    date: '2025-12-17',
-    summary: 'Personal waybar configuration with lambda style and Gruvbox Dark color scheme.',
-    repo: 'lambda_waybar',
-    tags: ['Shell', 'linux', 'waybar']
-  },
-  {
-    slug: 'fp-cpp-init',
-    title: 'FP C++ Init',
-    date: '2025-12-07',
-    summary: 'Cross-platform C++ project scaffolding with functional architecture design.',
-    repo: 'fp-cpp-init',
-    tags: ['C++', 'scaffolding', 'template']
-  },
-  {
-    slug: 'cpp-functional-programming',
-    title: 'C++ Functional Programming',
-    date: '2025-12-06',
-    summary: 'C++ functional programming tutorial - pure functions, immutability, and composition.',
-    repo: 'cpp-functional-programming',
-    tags: ['C++', 'functional', 'tutorial']
-  },
-  {
-    slug: 'rust-dynamic-thread-pool',
-    title: 'Rust Dynamic Thread Pool',
-    date: '2025-12-01',
-    summary: 'Simple dynamic thread pool implementation written in Rust.',
-    repo: 'Rust-dynamic-thread-pool',
-    tags: ['Rust', 'concurrency', 'threadpool']
+    slug: 'hello-world',
+    title: 'Hello World Example',
+    date: '2025-01-02',
+    summary: 'A simple hello world article demonstrating the blog template.',
+    // Using octocat's Hello-World repo
+    url: 'https://raw.githubusercontent.com/octocat/Hello-World/master/README',
+    tags: ['demo', 'hello-world']
   }
 ];

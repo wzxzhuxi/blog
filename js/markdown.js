@@ -140,6 +140,7 @@ const Markdown = (function() {
         }
       }
 
+
       while (container.firstChild) {
         container.removeChild(container.firstChild);
       }

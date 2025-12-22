@@ -1,38 +1,63 @@
 # ============================================
-# Blog Configuration
+# Blog Configuration - Demo Mode
 # ============================================
-# Fork this repository and modify this file
-# to create your own blog.
 #
-# After forking, you only need to:
-# 1. Edit this file with your information
-# 2. Update the data files in js/data/
-# 3. Deploy to GitHub Pages
+# This is a working demo configuration.
+# Clone the repo and run a local server to see it in action:
 #
-# About page content is automatically loaded from
-# your GitHub profile README (github.com/{username}/{username})
+#   python -m http.server 8000
+#   open http://localhost:8000
+#
+# To customize for your own blog:
+# 1. Replace 'octocat' with your GitHub username
+# 2. Update the personal info below
+# 3. Edit the data files in js/data/
 #
 # ============================================
 
+# --------------------------------------------
+# Personal Information
+# --------------------------------------------
 [personal]
-name = "Zhuxi"
-github_username = "wzxzhuxi"
-email = "w1355457260@gmail.com"
+# Your display name (shown in footer and about page)
+name = "Demo User"
 
+# Your GitHub username (used for generating URLs)
+# Using 'octocat' - GitHub's official demo account
+github_username = "octocat"
+
+# Your email address
+email = "demo@example.com"
+
+# --------------------------------------------
+# Site Configuration
+# --------------------------------------------
 [site]
-title = "Zhuxi Blog"
-description = "Functional Programming | Systems Programming | Rust & C++"
+# Blog title (shown in header and browser tab)
+title = "ProArt Blog Demo"
+
+# Short description (shown in meta tags)
+description = "A minimal, elegant blog template with dark theme"
+
+# Copyright year (shown in footer)
 copyright_year = 2025
+
+# Language code for the site (en, zh, etc.)
 lang = "en"
 
+# --------------------------------------------
+# GitHub Repository Settings
+# --------------------------------------------
 [github]
+# Default branch for your repositories
 default_branch = "main"
-about_branch = "blog"  # Branch for About page README
 
-# Social links
-# Available types: github, email
-# Or use 'url' field for custom URLs
+# Branch to load About page README from
+about_branch = "main"
 
+# --------------------------------------------
+# Social Links
+# --------------------------------------------
 [[social]]
 label = "GitHub"
 type = "github"

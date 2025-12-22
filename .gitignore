@@ -17,8 +17,8 @@ node_modules/
 *.tmp
 
 # Personal config (contains user-specific info)
-# Users should copy blog.config.template.toml to blog.config.toml
-# and customize it with their own information.
-# Uncomment the line below if you want to keep your config private:
+# The template ships with a demo blog.config.toml that works out of the box.
+# When you customize it for your own blog, you may want to add it back to .gitignore
+# to avoid committing personal info to your fork.
 # blog.config.toml
 
