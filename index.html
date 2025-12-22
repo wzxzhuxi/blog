@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Loading...">
+  <meta name="author" content="">
+  <title>Loading...</title>
+
+  <!-- ProArt Style -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Highlight.js (dark theme) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="#/" class="site-logo">
+        <span class="site-logo__icon">[/]</span>
+        <span>Loading...</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Toggle navigation">[=]</button>
+
+      <nav class="site-nav">
+        <a href="#/" class="site-nav__link">Articles</a>
+        <a href="#/projects" class="site-nav__link">Projects</a>
+        <a href="#/collections" class="site-nav__link">Collections</a>
+        <a href="#/diary" class="site-nav__link">Diary</a>
+        <a href="#/about" class="site-nav__link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container" id="app-content">
+      <!-- Content loaded by router -->
+      <div class="loading-state">
+        <div class="loading-state__spinner"></div>
+        <span class="loading-state__text">Loading configuration...</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <span class="site-footer__copyright">[c] 2025</span>
+      <div class="site-footer__links">
+        <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOML Parser -->
+  <script src="js/lib/toml.min.js"></script>
+
+  <!-- External Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.8/purify.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <!-- Data files (load first) -->
+  <script src="js/data/articles.js"></script>
+  <script src="js/data/projects.js"></script>
+  <script src="js/data/diaries.js"></script>
+  <script src="js/data/collections.js"></script>
+
+  <!-- Config Loader -->
+  <script src="js/config.js"></script>
+
+  <!-- GitHub API -->
+  <script src="js/github-api.js"></script>
+
+  <!-- Application -->
+  <script src="js/markdown.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Initialize with config -->
+  <script>
+    // Load config first, then initialize app
+    ConfigLoader.load(function(err, config) {
+      if (err) {
+        console.warn('[!] Config load warning:', err.message);
+      }
+
+      // Update page metadata from config
+      ConfigLoader.updatePageMeta(config);
+
+      // Initialize application
+      App.init();
+    });
+  </script>
+
+</body>
+</html>

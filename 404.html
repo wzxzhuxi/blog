@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page Not Found">
+  <title>404 - Page Not Found</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="index.html#/" class="site-logo">
+        <span class="site-logo__icon">[/]</span>
+        <span>Blog</span>
+      </a>
+
+      <nav class="site-nav">
+        <a href="index.html#/" class="site-nav__link">Articles</a>
+        <a href="index.html#/projects" class="site-nav__link">Projects</a>
+        <a href="index.html#/collections" class="site-nav__link">Collections</a>
+        <a href="index.html#/diary" class="site-nav__link">Diary</a>
+        <a href="index.html#/about" class="site-nav__link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <div class="fade-in" style="text-align: center; padding: 48px 0;">
+        <div style="font-size: 4rem; color: var(--accent-gold); font-family: var(--font-mono);">404</div>
+        <h1 style="margin: 16px 0;">Page Not Found</h1>
+        <p class="text-tertiary">The page you're looking for doesn't exist.</p>
+        <p style="margin-top: 24px;">
+          <a href="index.html#/" class="text-gold">[+] Back to Home</a>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <span class="site-footer__copyright">[c] 2025</span>
+      <div class="site-footer__links">
+        <a href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- TOML Parser -->
+  <script src="js/lib/toml.min.js"></script>
+
+  <!-- Data files -->
+  <script src="js/data/articles.js"></script>
+  <script src="js/data/projects.js"></script>
+  <script src="js/data/diaries.js"></script>
+  <script src="js/data/collections.js"></script>
+
+  <!-- Config Loader -->
+  <script src="js/config.js"></script>
+
+  <!-- Update page from config -->
+  <script>
+    ConfigLoader.load(function(err, config) {
+      if (config) {
+        // Update site logo
+        var logoText = document.querySelector('.site-logo span:not(.site-logo__icon)');
+        if (logoText) {
+          logoText.textContent = config.site.title;
+        }
+
+        // Update document title
+        document.title = '404 - ' + config.site.title;
+
+        // Update footer
+        var copyright = document.querySelector('.site-footer__copyright');
+        if (copyright) {
+          copyright.textContent = '[c] ' + config.site.copyright_year + ' ' + config.personal.name;
+        }
+
+        var footerGithub = document.querySelector('.site-footer__links a');
+        if (footerGithub) {
+          footerGithub.href = config.site.github;
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>

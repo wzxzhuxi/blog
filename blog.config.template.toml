@@ -1,0 +1,111 @@
+# ============================================
+# Blog Configuration Template
+# ============================================
+#
+# How to use:
+# 1. Copy this file to 'blog.config.toml'
+# 2. Replace all placeholder values with your information
+# 3. Deploy to GitHub Pages
+#
+# The 'About' page content is automatically loaded from
+# your GitHub profile README (github.com/{username}/{username})
+# You can customize which branch to use with 'about_branch'
+#
+# ============================================
+
+# --------------------------------------------
+# Personal Information
+# --------------------------------------------
+[personal]
+# Your display name (shown in footer and about page)
+name = "Your Name"
+
+# Your GitHub username (used for generating URLs)
+github_username = "your-github-username"
+
+# Your email address (used for email social link)
+email = "your@email.com"
+
+# --------------------------------------------
+# Site Configuration
+# --------------------------------------------
+[site]
+# Blog title (shown in header and browser tab)
+title = "My Blog"
+
+# Short description (shown in meta tags)
+description = "A personal blog about programming and technology"
+
+# Copyright year (shown in footer)
+copyright_year = 2025
+
+# Language code for the site (en, zh, etc.)
+lang = "en"
+
+# --------------------------------------------
+# GitHub Repository Settings
+# --------------------------------------------
+[github]
+# Default branch for your repositories (main, master, etc.)
+default_branch = "main"
+
+# Branch to load About page README from
+# Your profile README should be in: github.com/{username}/{username}
+# This setting specifies which branch to use
+about_branch = "main"
+
+# --------------------------------------------
+# Social Links
+# --------------------------------------------
+# Add your social media links here.
+# Each entry creates a link in the About page.
+#
+# Available types:
+#   - github: Auto-generates link to your GitHub profile
+#   - email: Auto-generates mailto link with your email
+#   - (any URL): Use 'url' field for custom links
+#
+# Icons should use ProArt geometric markers:
+#   [+] positive/add
+#   [-] negative/remove
+#   [*] star/featured
+#   [i] info
+#   [/] check/complete
+
+[[social]]
+label = "GitHub"
+type = "github"
+icon = "[+]"
+
+[[social]]
+label = "Email"
+type = "email"
+icon = "[+]"
+
+# Example: Custom URL link
+# [[social]]
+# label = "Twitter"
+# url = "https://twitter.com/yourusername"
+# icon = "[+]"
+
+# Example: LinkedIn
+# [[social]]
+# label = "LinkedIn"
+# url = "https://linkedin.com/in/yourusername"
+# icon = "[+]"
+
+# ============================================
+# Data Files
+# ============================================
+#
+# Articles, projects, diaries, and collections are
+# configured in the JavaScript data files:
+#
+#   js/data/articles.js    - Blog posts
+#   js/data/projects.js    - GitHub projects
+#   js/data/diaries.js     - Personal diary entries
+#   js/data/collections.js - Multi-chapter tutorials
+#
+# See each file for format documentation.
+#
+# ============================================
