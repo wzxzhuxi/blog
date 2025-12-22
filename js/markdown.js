@@ -98,6 +98,11 @@ const Markdown = (function() {
 
   async function renderExternalMarkdown(url, container) {
     try {
+      // Validate URL before fetching
+      if (!url || url === '#' || !url.startsWith('http')) {
+        throw new Error('Invalid content URL');
+      }
+
       while (container.firstChild) {
         container.removeChild(container.firstChild);
       }
