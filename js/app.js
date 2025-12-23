@@ -112,29 +112,41 @@ const App = (function() {
       return;
     }
 
-    const html = createBackLink('#/', 'Back to Articles') +
-      '<article class="article-content fade-in">' +
-        '<header class="article-content__header">' +
-          '<h1 class="article-content__title">' + escapeHtml(article.title) + '</h1>' +
-          '<div class="article-content__meta">' +
-            '<span class="font-mono">' + escapeHtml(article.date) + '</span>' +
-            createTags(article.tags) +
+    // Build content with TOC sidebar layout
+    // Security: all user data passed through escapeHtml()
+    const contentHtml = '<div class="content-with-toc">' +
+      '<div class="content-with-toc__main">' +
+        createBackLink('#/', 'Back to Articles') +
+        '<article class="article-content fade-in">' +
+          '<header class="article-content__header">' +
+            '<h1 class="article-content__title">' + escapeHtml(article.title) + '</h1>' +
+            '<div class="article-content__meta">' +
+              '<span class="font-mono">' + escapeHtml(article.date) + '</span>' +
+              createTags(article.tags) +
+            '</div>' +
+          '</header>' +
+          '<div id="article-body" class="article-content__body">' +
+            '<div class="loading-state">' +
+              '<div class="loading-state__spinner"></div>' +
+              '<span class="loading-state__text">Loading content...</span>' +
+            '</div>' +
           '</div>' +
-        '</header>' +
-        '<div id="article-body" class="article-content__body">' +
-          '<div class="loading-state">' +
-            '<div class="loading-state__spinner"></div>' +
-            '<span class="loading-state__text">Loading content...</span>' +
-          '</div>' +
-        '</div>' +
-      '</article>';
+        '</article>' +
+      '</div>' +
+      '<aside class="content-with-toc__sidebar toc-sidebar toc-sidebar--empty" id="toc-sidebar"></aside>' +
+    '</div>';
 
-    mainContent().innerHTML = html;
+    mainContent().textContent = '';
+    mainContent().insertAdjacentHTML('beforeend', contentHtml);
 
-    // Load external markdown
+    // Load external markdown, then update TOC
     if (article.url && window.Markdown) {
       const bodyEl = document.getElementById('article-body');
-      Markdown.renderExternalMarkdown(article.url, bodyEl);
+      Markdown.renderExternalMarkdown(article.url, bodyEl).then(function() {
+        if (window.TOC) {
+          TOC.update(bodyEl);
+        }
+      });
     }
   }
 
@@ -407,30 +419,42 @@ const App = (function() {
         '<span class="chapter-nav__link chapter-nav__disabled">Next [&gt;]</span>') +
     '</div>';
 
-    const html = createBackLink('#/collection/' + escapeHtml(collection.slug), 'Back to ' + escapeHtml(collection.title)) +
-      '<article class="chapter-content fade-in">' +
-        '<header class="chapter-content__header">' +
-          '<div class="chapter-content__number">Chapter ' + String(chapter.number).padStart(2, '0') + '</div>' +
-          '<h1 class="chapter-content__title">' + escapeHtml(chapter.title) + '</h1>' +
-          '<div class="chapter-content__collection">' +
-            'from <a href="#/collection/' + escapeHtml(collection.slug) + '">' + escapeHtml(collection.title) + '</a>' +
+    // Build content with TOC sidebar layout
+    // Security: all user data passed through escapeHtml()
+    const contentHtml = '<div class="content-with-toc">' +
+      '<div class="content-with-toc__main">' +
+        createBackLink('#/collection/' + escapeHtml(collection.slug), 'Back to ' + escapeHtml(collection.title)) +
+        '<article class="chapter-content fade-in">' +
+          '<header class="chapter-content__header">' +
+            '<div class="chapter-content__number">Chapter ' + String(chapter.number).padStart(2, '0') + '</div>' +
+            '<h1 class="chapter-content__title">' + escapeHtml(chapter.title) + '</h1>' +
+            '<div class="chapter-content__collection">' +
+              'from <a href="#/collection/' + escapeHtml(collection.slug) + '">' + escapeHtml(collection.title) + '</a>' +
+            '</div>' +
+          '</header>' +
+          '<div id="chapter-body" class="chapter-content__body">' +
+            '<div class="loading-state">' +
+              '<div class="loading-state__spinner"></div>' +
+              '<span class="loading-state__text">Loading chapter...</span>' +
+            '</div>' +
           '</div>' +
-        '</header>' +
-        '<div id="chapter-body" class="chapter-content__body">' +
-          '<div class="loading-state">' +
-            '<div class="loading-state__spinner"></div>' +
-            '<span class="loading-state__text">Loading chapter...</span>' +
-          '</div>' +
-        '</div>' +
-        navHtml +
-      '</article>';
+          navHtml +
+        '</article>' +
+      '</div>' +
+      '<aside class="content-with-toc__sidebar toc-sidebar toc-sidebar--empty" id="toc-sidebar"></aside>' +
+    '</div>';
 
-    mainContent().innerHTML = html;
+    mainContent().textContent = '';
+    mainContent().insertAdjacentHTML('beforeend', contentHtml);
 
-    // Load external markdown
+    // Load external markdown, then update TOC
     if (chapter.url && window.Markdown) {
       const bodyEl = document.getElementById('chapter-body');
-      Markdown.renderExternalMarkdown(chapter.url, bodyEl);
+      Markdown.renderExternalMarkdown(chapter.url, bodyEl).then(function() {
+        if (window.TOC) {
+          TOC.update(bodyEl);
+        }
+      });
     }
   }
 
@@ -449,27 +473,33 @@ const App = (function() {
       '</a>';
     }).join('');
 
-    var html = '<div class="about-content fade-in">' +
-      createPageTitle('About') +
-
-      '<div class="about-content__section">' +
-        '<div id="about-body" class="about-body">' +
-          '<div class="loading-state">' +
-            '<div class="loading-state__spinner"></div>' +
-            '<span class="loading-state__text">Loading profile...</span>' +
+    // Build content with TOC sidebar layout
+    // Security: all user data passed through escapeHtml()
+    var contentHtml = '<div class="content-with-toc">' +
+      '<div class="content-with-toc__main">' +
+        '<div class="about-content fade-in">' +
+          createPageTitle('About') +
+          '<div class="about-content__section">' +
+            '<div id="about-body" class="about-body">' +
+              '<div class="loading-state">' +
+                '<div class="loading-state__spinner"></div>' +
+                '<span class="loading-state__text">Loading profile...</span>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="about-content__section">' +
+            '<h2>Connect</h2>' +
+            '<div class="social-links">' +
+              socialLinks +
+            '</div>' +
           '</div>' +
         '</div>' +
       '</div>' +
-
-      '<div class="about-content__section">' +
-        '<h2>Connect</h2>' +
-        '<div class="social-links">' +
-          socialLinks +
-        '</div>' +
-      '</div>' +
+      '<aside class="content-with-toc__sidebar toc-sidebar toc-sidebar--empty" id="toc-sidebar"></aside>' +
     '</div>';
 
-    mainContent().innerHTML = html;
+    mainContent().textContent = '';
+    mainContent().insertAdjacentHTML('beforeend', contentHtml);
 
     // Load GitHub profile README from blog branch
     // GitHub profile repo: github.com/{username}/{username}
@@ -482,7 +512,11 @@ const App = (function() {
 
     if (window.Markdown) {
       var bodyEl = document.getElementById('about-body');
-      Markdown.renderExternalMarkdown(profileReadmeUrl, bodyEl);
+      Markdown.renderExternalMarkdown(profileReadmeUrl, bodyEl).then(function() {
+        if (window.TOC) {
+          TOC.update(bodyEl);
+        }
+      });
     }
   }
 

@@ -26,20 +26,11 @@
 window.DataArticles = [
   {
     slug: 'getting-started',
-    title: 'Getting Started with This Blog',
-    date: '2025-01-01',
-    summary: 'A quick guide to setting up your own blog using this template.',
-    // Using octocat's Spoon-Knife repo - a famous GitHub demo repo
-    url: 'https://raw.githubusercontent.com/octocat/Spoon-Knife/main/README.md',
-    tags: ['tutorial', 'getting-started']
-  },
-  {
-    slug: 'hello-world',
-    title: 'Hello World Example',
-    date: '2025-01-02',
-    summary: 'A simple hello world article demonstrating the blog template.',
-    // Using octocat's Hello-World repo
-    url: 'https://raw.githubusercontent.com/octocat/Hello-World/master/README',
-    tags: ['demo', 'hello-world']
+    title: '博客入门指南',
+    date: '2025-12-23',
+    summary: '从零开始搭建你的 ProArt 风格博客，包含配置、部署和自定义指南。',
+    // 使用本地 README.md
+    url: './README.md',
+    tags: ['教程', '入门', '配置']
   }
 ];
