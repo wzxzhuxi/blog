@@ -120,7 +120,14 @@ const Markdown = (function() {
   async function renderExternalMarkdown(url, container, expectedPageType) {
     try {
       // Validate URL before fetching
-      if (!url || url === '#' || !url.startsWith('http')) {
+      // Allow: http(s) URLs, relative paths (./ or /), and same-origin paths
+      if (!url || url === '#') {
+        throw new Error('Invalid content URL');
+      }
+      var isValidUrl = url.startsWith('http') ||
+                       url.startsWith('./') ||
+                       url.startsWith('/');
+      if (!isValidUrl) {
         throw new Error('Invalid content URL');
       }
 
