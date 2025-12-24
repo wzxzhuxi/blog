@@ -89,8 +89,9 @@
    * Supports multiple formats:
    *   1. repo only: uses config username, default branch, README.md
    *   2. repo + path: uses config username, default branch, custom path
-   *   3. url: uses provided URL directly
-   *   4. external: { username, repo, branch, path } for external repos
+   *   3. repo + branch: uses specified branch instead of default
+   *   4. url: uses provided URL directly
+   *   5. external: { username, repo, branch, path } for external repos
    *
    * @param {Array} articles - Raw articles data
    * @param {object} config - Parsed config
@@ -118,13 +119,13 @@
         return processed;
       }
 
-      // Format 3 & 4: Own repository (repo only or repo + path)
+      // Format 3 & 4: Own repository (repo only or repo + path + branch)
       if (article.repo) {
         processed.url = getGitHubRawUrl(
           config.personal.github_username,
           article.repo,
           article.path || article.file || 'README.md',  // Support both 'path' and legacy 'file'
-          config.github.default_branch
+          article.branch || config.github.default_branch  // Allow per-article branch override
         );
       }
 
@@ -161,8 +162,9 @@
    * Supports multiple chapter formats:
    *   1. repo only: uses config username, default branch, README.md
    *   2. repo + path: uses config username, default branch, custom path (e.g., '03-pure-functions/README.md')
-   *   3. url: uses provided URL directly
-   *   4. external: { username, repo, branch, path } for external repos
+   *   3. repo + branch: uses specified branch instead of default
+   *   4. url: uses provided URL directly
+   *   5. external: { username, repo, branch, path } for external repos
    *
    * @param {Array} collections - Raw collections data
    * @param {object} config - Parsed config
@@ -200,13 +202,13 @@
             return processedChapter;
           }
 
-          // Format 3 & 4: Own repository (repo only or repo + path)
+          // Format 3 & 4: Own repository (repo only or repo + path + branch)
           if (chapter.repo) {
             processedChapter.url = getGitHubRawUrl(
               config.personal.github_username,
               chapter.repo,
               chapter.path || chapter.file || 'README.md',  // Support both 'path' and legacy 'file'
-              config.github.default_branch
+              chapter.branch || config.github.default_branch  // Allow per-chapter branch override
             );
           }
 
