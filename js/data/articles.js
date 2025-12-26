@@ -48,5 +48,14 @@ window.DataArticles = [
     repo: 'pool-factory',
     path: 'docs/tutorial.md',
     tags: ['C++', '函数式编程', '设计模式', '资源池']
-  }
+  },
+  {
+    slug: 'fp-actor',
+    title: '函数式风格 actor',
+    date: '2025-12-26',
+    summary: 'fp 风格 actor 组件，C++ 函数式编程结题项目',
+    repo: 'fp-actor',
+    path: 'docs/fp-actor-实现指南.md',
+    tags: ['C++', '函数式编程', 'actor', '设计模式']
+  },
 ];

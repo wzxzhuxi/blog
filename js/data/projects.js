@@ -36,6 +36,13 @@ window.DataProjects = [
     tags: ['rust', 'database', 'tsdb', 'ddia']
   },
   {
+    name: 'fp-actor',
+    description: 'fp 风格 actor 组件,C++函数式编程结题项目',
+    repo: 'fp-actor',
+    language: 'C++',
+    tags: ['cpp', 'actor', 'functional']
+  },
+  {
     name: 'Pool Factory',
     description: '函数式编程工厂模式实践，使用纯函数实现通用池化技术',
     repo: 'pool-factory',
